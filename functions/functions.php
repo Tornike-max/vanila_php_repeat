@@ -43,9 +43,43 @@ function dd($val)
 }
 
 
-function abort($responseCode)
+function abort($responseCode = 404)
 {
     http_response_code($responseCode);
-    require 'views/404.php';
+    require "views/$responseCode.php";
     die();
+}
+
+function routeToController($uri, $routes)
+{
+    if (array_key_exists($uri, $routes)) {
+        require $routes[$uri];
+    } else {
+        abort(404);
+    }
+}
+
+
+function isAuth($condition, $status = 403)
+{
+    if (!$condition) {
+        abort($status);
+    }
+}
+
+function hasData($data)
+{
+    if (!$data) {
+        abort(404);
+    }
+    return true;
+}
+
+
+function getData()
+{
+    $data = $_REQUEST;
+
+
+    return $data;
 }

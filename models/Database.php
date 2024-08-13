@@ -3,6 +3,8 @@
 class Database
 {
     public $pdo;
+    public $statement;
+    public $user_id = 1;
 
     public function __construct($config, $username = 'root', $password = '')
     {
@@ -11,52 +13,70 @@ class Database
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function query($sql)
+    public function query($sql, $id)
     {
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute();
+        $this->statement = $this->pdo->prepare($sql);
+        $this->statement->bindValue(':id', $id);
+        $this->statement->execute();
 
-        $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function find($table, $id)
+    {
+        $this->statement = $this->pdo->prepare("select * from $table where id = :id");
+        $this->statement->bindValue(':id', $id);
+
+        $this->statement->execute();
+
+        return $this->statement;
+    }
+
+    public function findOrFail($table, $id)
+    {
+        $data = $this->find($table, $id)->fetch();
+
+        hasData($data);
+        isAuth(isset($data['user_id']) && $data['user_id'] === $this->user_id);
+        return $data;
+    }
+
+    public function fetch()
+    {
+        return $this->statement->fetch();
+    }
+
+    public function fetchAll()
+    {
+        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findAll($table)
+    {
+        $this->statement = $this->pdo->prepare("select * from $table");
+        $this->statement->execute();
+
+        $posts = $this->statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $posts;
     }
 
-    public function find($id)
+    public function orderBy($table, $by, $direction)
     {
-        $statement = $this->pdo->prepare("select * from posts where id = $id");
-        $statement->execute();
+        $this->statement = $this->pdo->prepare("select * from $table order by $by $direction");
+        $this->statement->execute();
 
-        $post = $statement->fetch(PDO::FETCH_OBJ);
-
-        return $post;
-    }
-
-    public function findAll()
-    {
-        $statement = $this->pdo->prepare("select * from posts");
-        $statement->execute();
-
-        $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        return $posts;
-    }
-
-    public function orderBy($by, $direction)
-    {
-        $statement = $this->pdo->prepare("select * from posts order by $by $direction");
-        $statement->execute();
-
-        $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $posts = $this->statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $posts;
     }
 
     public function updateTitle($title, $id)
     {
-        $statement = $this->pdo->prepare("update posts set title = :title where id = :id");
-        $statement->bindValue(':id', $id);
-        $statement->bindValue(':title', $title);
-        if ($statement->execute()) {
+        $this->statement = $this->pdo->prepare("update posts set title = :title where id = :id");
+        $this->statement->bindValue(':id', $id);
+        $this->statement->bindValue(':title', $title);
+        if ($this->statement->execute()) {
             echo 'everything looks good';
         } else {
             echo 'something went wrong';
@@ -65,9 +85,9 @@ class Database
 
     public function delete($id)
     {
-        $statement = $this->pdo->prepare('delete from posts where id = :id');
-        $statement->bindValue(':id', $id);
-        if ($statement->execute()) {
+        $this->statement = $this->pdo->prepare('delete from posts where id = :id');
+        $this->statement->bindValue(':id', $id);
+        if ($this->statement->execute()) {
             echo 'post deleted successfully';
         } else {
             echo "can't delete post";
@@ -77,14 +97,27 @@ class Database
     public function selectUsers($sql)
     {
         $id = $_GET['id'];
-        $statement = $this->pdo->prepare($sql);
+        $this->statement = $this->pdo->prepare($sql);
 
-        $statement->bindValue(':id', $id);
-        $statement->execute();
+        $this->statement->bindValue(':id', $id);
+        $this->statement->execute();
 
-        $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $users = $this->statement->fetchAll(PDO::FETCH_ASSOC);
 
 
         return $users;
+    }
+
+    public function create($table, $data)
+    {
+        $this->statement = $this->pdo->prepare("INSERT INTO $table (body, user_id) VALUES (:body, :user_id)");
+        $this->statement->bindValue(':body', $data['body']);
+        $this->statement->bindValue(':user_id', $data['user_id']);
+
+        if ($this->statement->execute()) {
+            http_response_code(201);
+        } else {
+            http_response_code(500);
+        }
     }
 }
