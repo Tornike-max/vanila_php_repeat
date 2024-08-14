@@ -3,9 +3,9 @@ $title = 'Notes';
 
 ?>
 
-<?php require_once 'views/partials/head.php' ?>
-<?php require_once 'views/partials/nav.php' ?>
-<?php require_once 'views/partials/header.php' ?>
+<?php require_once '../views/partials/head.php' ?>
+<?php require_once '../views/partials/nav.php' ?>
+<?php require_once '../views/partials/header.php' ?>
 
 <main class="max-w-7xl mx-auto my-8 p-4 bg-white shadow-lg rounded-lg">
     <ul class="space-y-4">
@@ -26,4 +26,4 @@ $title = 'Notes';
 </main>
 
 
-<?php require_once 'views/partials/footer.php' ?>
+<?php require_once '../views/partials/footer.php' ?>

@@ -83,3 +83,10 @@ function getData()
 
     return $data;
 }
+
+
+function view($path, $attributes = [])
+{
+    extract($attributes);
+    require $path;
+}

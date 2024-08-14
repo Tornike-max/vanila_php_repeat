@@ -1,5 +1,11 @@
 <?php
 
+namespace App\Core\Database;
+
+
+
+use PDO;
+
 class Database
 {
     public $pdo;

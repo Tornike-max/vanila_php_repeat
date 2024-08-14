@@ -2,4 +2,4 @@
 
 
 
-include_once 'views/contact.php';
+view('../views/contact.php');

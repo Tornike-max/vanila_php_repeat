@@ -56,4 +56,4 @@ $books = [
     ]
 ];
 
-include_once 'views/index.view.php';
+return view('../views/index.view.php');

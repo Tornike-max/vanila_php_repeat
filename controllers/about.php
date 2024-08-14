@@ -2,4 +2,4 @@
 
 
 
-include_once 'views/about.php';
+return view('../views/about.php');

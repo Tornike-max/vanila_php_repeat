@@ -3,9 +3,9 @@ $title = 'Create Note';
 
 ?>
 
-<?php require_once 'views/partials/head.php' ?>
-<?php require_once 'views/partials/nav.php' ?>
-<?php require_once 'views/partials/header.php' ?>
+<?php require_once '../views/partials/head.php' ?>
+<?php require_once '../views/partials/nav.php' ?>
+<?php require_once '../views/partials/header.php' ?>
 <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <a href="/notes" class="text-blue-500 underline font-semibold">Go Back</a>
@@ -36,4 +36,4 @@ $title = 'Create Note';
 </main>
 
 
-<?php require_once 'views/partials/footer.php' ?>
+<?php require_once '../views/partials/footer.php' ?>
