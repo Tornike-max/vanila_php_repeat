@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-use App\Core\Database\Database;
+use App\Core\Database;
 use App\Core\Validator\Validator;
 
 class Application

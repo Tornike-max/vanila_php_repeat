@@ -33,6 +33,13 @@ function currentURI()
     return parse_url($_SERVER['REQUEST_URI']);
 }
 
+function currentPathVal()
+{
+    $idIndex = strpos(currentURI()['query'], '=');
+    $idIfExists = substr(currentURI()['query'], $idIndex + 1) ?? null;
+    return $idIfExists;
+}
+
 
 function dd($val)
 {
