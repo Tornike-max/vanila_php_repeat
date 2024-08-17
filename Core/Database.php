@@ -17,13 +17,47 @@ class Database
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function query($sql, $id)
+    public function query($sql, $id = null)
     {
         $this->statement = $this->pdo->prepare($sql);
-        $this->statement->bindValue(':id', $id);
+        if ($id !== null) {
+            $this->statement->bindValue(':id', $id);
+        };
         $this->statement->execute();
 
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function register($sql, $validatedData)
+    {
+        if (empty($validatedData)) {
+            return;
+        }
+        $this->statement = $this->pdo->prepare($sql);
+        $this->statement->bindValue(':name', $validatedData['name']);
+        $this->statement->bindValue(':email', $validatedData['email']);
+        $this->statement->bindValue(':created_at', date('d M Y H:i:s'));
+        $this->statement->bindValue(':password', $validatedData['password']);
+
+        $this->statement->execute();
+
+        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUser($sql, $email = '')
+    {
+        $this->statement = $this->pdo->prepare($sql);
+
+        if ($email !== '') {
+            $this->statement->bindValue(':email', $email);
+        }
+
+
+        if ($this->statement->execute()) {
+            return $this->statement->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
     }
 
     public function find($table, $id)

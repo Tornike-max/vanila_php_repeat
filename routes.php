@@ -25,6 +25,17 @@ $router->get('/about', '../controllers/about.php');
 $router->get('/contact', '../controllers/contact.php');
 
 
+$router->get('/register', '../controllers/register/create.php');
+$router->post('/register/store', '../controllers/register/store.php');
+
+
+$router->get('/login', '../controllers/login/create.php');
+$router->post('/login/store', '../controllers/login/store.php');
+$router->delete('/session/destroy', '../controllers/login/destroy.php');
+
+
+
+
 
 
 $uri = parse_url($_SERVER['REQUEST_URI'])['path'];

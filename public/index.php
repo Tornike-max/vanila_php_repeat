@@ -1,9 +1,8 @@
 <?php
 
-use App\Controllers\NoteController;
-use App\Core\App;
 use App\Core\Router;
 
+session_start();
 require __DIR__ . '/../functions/functions.php';
 require __DIR__ . '/../Core/Database.php';
 require __DIR__ . '/../Core/Validator.php';
