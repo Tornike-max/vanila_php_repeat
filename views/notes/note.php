@@ -12,6 +12,10 @@ $title = 'Note';
         <div class="max-w-xl m-auto py-6 px-8 w-full flex justify-center items-center bg-slate-200 shaddow-lg rounded-lg">
             <h1><?= $note['body'] ?></h1>
         </div>
+        <form method="post" action="/notes/delete?id=<?= $note['id'] ?>" class="w-full">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button class="text-red-500 text-lg font-semibold">Delete</button>
+        </form>
     </div>
 </main>
 

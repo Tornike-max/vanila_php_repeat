@@ -10,10 +10,11 @@ $title = 'Notes';
 <main class="max-w-7xl mx-auto my-8 p-4 bg-white shadow-lg rounded-lg">
     <ul class="space-y-4">
         <?php foreach ($notes as $note): ?>
-            <li class="text-lg bg-slate-100 py-2 px-3 rounded-md">
+            <li class="text-lg bg-slate-100 py-4 px-3 rounded-md w-full flex justify-between items-center">
                 <a href="/note?id=<?= $note['id'] ?>" class="font-semibold text-blue-600 hover:text-blue-700 underline">
                     <?= $note['body'] ?>
                 </a>
+                <a href="/notes/edit?id=<?= $note['id'] ?>" class="py-2 px-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white duration-150 transition-all shadow-md">Edit</a>
             </li>
         <?php endforeach; ?>
     </ul>

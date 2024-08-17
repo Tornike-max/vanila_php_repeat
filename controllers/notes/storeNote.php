@@ -1,7 +1,7 @@
 <?php
 
-use App\Core\Database\Database;
-use App\Core\Validator\Validator;
+use App\Core\Database;
+use App\Core\Validator;
 
 $config = require '../config/config.php';
 
@@ -10,14 +10,6 @@ $db = new Database($config);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = getData();
     $errors = [];
-    if (!Validator::isEmpty($data['body'])) {
-        $errors = [
-            'error' => 'Body is required'
-        ];
-        view('../views/notes/createNote.php', [
-            'errors' => $errors
-        ]);
-    }
 
     if (!Validator::string($data['body'], 1, 500)) {
         $errors = [

@@ -2,9 +2,9 @@
 $title = '404: Not Found!';
 ?>
 
-<?php require_once 'views/partials/head.php' ?>
-<?php require_once 'views/partials/nav.php' ?>
-<?php require_once 'views/partials/header.php' ?>
+<?php require_once '../views/partials/head.php' ?>
+<?php require_once '../views/partials/nav.php' ?>
+<?php require_once '../views/partials/header.php' ?>
 
 <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -13,4 +13,4 @@ $title = '404: Not Found!';
     </div>
 </main>
 
-<?php require_once 'views/partials/footer.php' ?>
+<?php require_once '../views/partials/footer.php' ?>

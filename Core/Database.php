@@ -2,8 +2,6 @@
 
 namespace App\Core;
 
-
-
 use PDO;
 
 class Database
@@ -77,6 +75,18 @@ class Database
         return $posts;
     }
 
+    public function update($table, $id, $key, $value)
+    {
+        $this->statement = $this->pdo->prepare("update $table set $key = :value where id = :id");
+        $this->statement->bindValue(':value', $value);
+        $this->statement->bindValue(':id', $id);
+        if ($this->statement->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function updateTitle($title, $id)
     {
         $this->statement = $this->pdo->prepare("update posts set title = :title where id = :id");
@@ -89,14 +99,14 @@ class Database
         }
     }
 
-    public function delete($id)
+    public function delete($table, $id)
     {
-        $this->statement = $this->pdo->prepare('delete from posts where id = :id');
+        $this->statement = $this->pdo->prepare("delete from $table where id = :id");
         $this->statement->bindValue(':id', $id);
         if ($this->statement->execute()) {
-            echo 'post deleted successfully';
+            return true;
         } else {
-            echo "can't delete post";
+            return false;
         }
     }
 

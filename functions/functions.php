@@ -53,7 +53,7 @@ function dd($val)
 function abort($responseCode = 404)
 {
     http_response_code($responseCode);
-    require "views/$responseCode.php";
+    require "../views/$responseCode.php";
     die();
 }
 
