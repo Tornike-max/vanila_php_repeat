@@ -11,27 +11,27 @@
 // ];
 
 
-$router->get('/', '../controllers/index.php');
-$router->get('/notes', '../controllers/notes/notes.php');
-$router->get('/note', '../controllers/notes/note.php');
-$router->get('/notes/create', '../controllers/notes/createNote.php');
-$router->post('/notes/store', '../controllers/notes/storeNote.php');
-$router->delete('/notes/delete', '../controllers/notes/deleteNote.php');
-$router->get('/notes/edit', '../controllers/notes/editNote.php');
-$router->patch('/notes/update', '../controllers/notes/updateNote.php');
+$router->get('/', '../Http/controllers/index.php');
+$router->get('/notes', '../Http/controllers/notes/notes.php');
+$router->get('/note', '../Http/controllers/notes/note.php');
+$router->get('/notes/create', '../Http/controllers/notes/createNote.php');
+$router->post('/notes/store', '../Http/controllers/notes/storeNote.php');
+$router->delete('/notes/delete', '../Http/controllers/notes/deleteNote.php');
+$router->get('/notes/edit', '../Http/controllers/notes/editNote.php');
+$router->patch('/notes/update', '../Http/controllers/notes/updateNote.php');
 
 
-$router->get('/about', '../controllers/about.php');
-$router->get('/contact', '../controllers/contact.php');
+$router->get('/about', '../Http/controllers/about.php');
+$router->get('/contact', '../Http/controllers/contact.php');
 
 
-$router->get('/register', '../controllers/register/create.php');
-$router->post('/register/store', '../controllers/register/store.php');
+$router->get('/register', '../Http/controllers/register/create.php');
+$router->post('/register/store', '../Http/controllers/register/store.php');
 
 
-$router->get('/login', '../controllers/login/create.php');
-$router->post('/login/store', '../controllers/login/store.php');
-$router->delete('/session/destroy', '../controllers/login/destroy.php');
+$router->get('/login', '../Http/controllers/login/create.php');
+$router->post('/login/store', '../Http/controllers/login/store.php');
+$router->delete('/session/destroy', '../Http/controllers/login/destroy.php');
 
 
 

@@ -2,7 +2,7 @@
 
 use App\Core\Database;
 
-if (!$_SESSION['user']) {
+if (!isset($_SESSION['user'])) {
     $data = getData();
 
     if (!empty($data)) {

@@ -85,7 +85,7 @@ function hasData($data)
 
 function getData()
 {
-    $data = $_REQUEST;
+    $data = $_REQUEST ?? null;
 
 
     return $data;

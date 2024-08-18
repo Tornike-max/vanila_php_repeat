@@ -20,14 +20,14 @@
                     <!-- Profile dropdown -->
                     <div class="relative ml-3">
                         <div class="flex items-center justify-center gap-6">
-                            <?php if (!$_SESSION['user']): ?>
+                            <?php if (isset($_SESSION['user']) === false): ?>
                                 <div class="flex justify-center items-center gap-2">
                                     <a href="/register" class="text-white py-1 px-3 bg-slate-700 rounded-lg hover:bg-slate-900 duration-150 transition-all">Register</a>
                                     <a href="/login" class="text-white py-1 px-3 bg-slate-700 rounded-lg hover:bg-slate-900 duration-150 transition-all">Login</a>
                                 </div>
                             <?php endif; ?>
 
-                            <?php if ($_SESSION['user']): ?>
+                            <?php if (isset($_SESSION['user']) === true): ?>
                                 <div class="flex justify-center items-center gap-6">
                                     <form method="post" action="/session/destroy">
                                         <input type="hidden" name='_method' value="DELETE" />
