@@ -15,6 +15,8 @@ $router = new Router($method);
 
 $routes = require __DIR__ . '/../routes.php';
 
+unset($_SESSION['_flash']);
+unset($_SESSION['old']);
 
 
 

@@ -31,17 +31,13 @@ class LoginForm
     {
         if (isset($user) && password_verify($data['password'], $user['password'])) {
             $_SESSION['user'] = $user;
-            return header('Location: /');;
+            return view('../views/index.view.php');
         } else {
-            $errors = [
+            return $this->errors = [
                 'password' => [
                     'error' => 'password is not correct',
                 ]
             ];
-
-            return view('../views/auth/login.view.php', [
-                'errors' => $errors
-            ]);
         }
     }
 }

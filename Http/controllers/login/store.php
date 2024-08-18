@@ -12,11 +12,11 @@ if (!isset($_SESSION['user'])) {
     if (!empty($data)) {
         $config = require '../config/config.php';
         $db = new Database($config);
+        $_SESSION['old']['email'] = $data['email'];
 
         $loginForm = new LoginForm();
 
         $validationErrors = $loginForm->validate($data);
-
 
         if (!empty($validationErrors)) {
             return view('../views/auth/login.view.php', [
@@ -26,7 +26,13 @@ if (!isset($_SESSION['user'])) {
 
         $user = $db->getUser('select * from users where email = :email', $data['email']);
 
-        $loginForm->login($user, $data);
+
+        $loginOrGetErrors = $loginForm->login($user, $data);
+        if ($loginOrGetErrors['password']) {
+            $_SESSION['_flash'] = $loginOrGetErrors;
+            header('Location: /login');
+            exit();
+        }
     }
 } else {
     return view('../views/404.php');

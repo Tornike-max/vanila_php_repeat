@@ -97,3 +97,15 @@ function view($path, $attributes = [])
     extract($attributes);
     require $path;
 }
+
+function hashedPassword($password)
+{
+    return password_hash($password, PASSWORD_DEFAULT);
+}
+
+
+function redirect($path)
+{
+    header("Location: $path");
+    exit();
+}

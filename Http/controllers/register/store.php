@@ -1,6 +1,9 @@
 <?php
 
 use App\Core\Database;
+use App\Http\Controllers\RegisterForm;
+
+require 'RegisterForm.php';
 
 if (!isset($_SESSION['user'])) {
     $data = getData();
@@ -8,45 +11,23 @@ if (!isset($_SESSION['user'])) {
     if (!empty($data)) {
         $config = require '../config/config.php';
         $db = new Database($config);
-        $errors = [];
+        $register = new RegisterForm();
+        $users = $db->findAll('users');
+
+        $_SESSION['old']['name'] = $data['name'];
+        $_SESSION['old']['email'] = $data['email'];
 
 
-        if ($data['password'] !== $data['password_confirmation']) {
-            $errors = [
-                'password' => [
-                    'error' => 'Passwords should match',
-                ]
-            ];
-            return view('../views/auth/register.view.php', [
-                'errors' => $errors
-            ]);
-        };
+        $validationErrors = $register->validate($data, $users);
 
-        if (strlen($data['name'] < 2)) {
-            $errors = [
-                'name' => [
-                    'error' => 'Name should be at least 2 characters long',
-                ]
-            ];
-
-            return view('../views/auth/register.view.php', [
-                'errors' => $errors
-            ]);
+        if (!empty($validationErrors)) {
+            $_SESSION['_flash'] = $validationErrors;
+            header('Location: /register');
+            exit();
         }
 
-        if (strpos($data['email'], '@') === false) {
-            $errors = [
-                'email' => [
-                    'error' => 'Invalid email address',
-                ]
-            ];
+        $data['password'] = hashedPassword($data['password']);
 
-            return view('../views/auth/register.view.php', [
-                'errors' => $errors
-            ]);
-        }
-
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         $validatedData = [
             'name' => $data['name'],
             'email' => $data['email'],
